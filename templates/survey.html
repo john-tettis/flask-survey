@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block title %} Survey{% endblock %}
+
+
+{% block content%}
+    <div class="card-sm">
+        <div class="card-header">
+        {{question.question}}
+        </div>
+        <div class="card-body">
+            <form action='/answer' method="POST">
+                
+                <div class="container mt-3">
+                {% for choice in question.choices%}
+                <div class="form-check m-2">
+                    <input class="form-check-input" type="radio" id="{{choice}}" name="answer" value="{{choice}}">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                    {{choice}}
+                    </label>
+                </div>
+                {% endfor %}
+                
+                <button class="btn btn-primary mt-3">
+                {% if last%}
+                Complete Survey
+                {% else %}
+                Next Question
+                {% endif%}
+                </button>
+                <input type = "hidden" name = "next" value = "{{num+1}}" />
+                <input type = "hidden" name = "last" value = "{{last}}" />
+            </form>
+        </div>
+    </div>
+    
+
+{% endblock%}
