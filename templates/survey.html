@@ -16,14 +16,14 @@
                 {% if session['answers'][num|string] == choice %}
                 <div class="form-check m-2">
                     <input class="form-check-input" type="radio" id="{{choice}}" name="answer" value="{{choice}}" checked>
-                    <label class="form-check-label" for="flexRadioDefault1">
+                    <label class="form-check-label" for="{{choice}}">
                     {{choice}}
                     </label>
                 </div>
                 {% else %}
                 <div class="form-check m-2">
                     <input class="form-check-input" type="radio" id="{{choice}}" name="answer" value="{{choice}}">
-                    <label class="form-check-label" for="flexRadioDefault1">
+                    <label class="form-check-label" for="{{choice}}">
                     {{choice}}
                     </label>
                 </div>

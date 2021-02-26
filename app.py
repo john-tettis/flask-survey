@@ -1,15 +1,21 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from surveys import surveys
+from surveys import surveys, Survey, Question
+import json
+import sys
 
 app = Flask(__name__)
-app.debug =  True
-app.config['SECRET_KEY'] = 'secret secret'
+app.debug =  False
+app.config['SECRET_KEY'] = 'secret 1secret'
 
 toolbar = DebugToolbarExtension(app)
 
+
+
 @app.route('/')
 def home():
+    # surveysJSON = [json.dumps(survey.toJson(), indent=4) for survey in surveys]
+    # session['all_surveys']=surveys
     return render_template('home.html', surveys=surveys)
 
 @app.route('/survey/question/<int:num>')
@@ -88,4 +94,36 @@ def landing():
             final.append([questions[i],answers[str(i)],False])
 
     return render_template('landing.html', questions=final)
+
+
+@app.route('/make-survey')
+def survey_form():
+    return render_template('make_survey.html')
+
+@app.route('/make-survey/compile', methods=['POST'])
+def add_survey():
+    print('******************************************88888888888888*')
+    survey = request.json
+    title=survey['title']
+    instructions= survey['instructions']
+    questions=[]
+    print(survey, file=sys.stderr)
+    
+    for obj in survey['questions']:
+        print(obj,file=sys.stderr)
+        print('AHGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH',file=sys.stderr)
+        question = obj['question']
+        answers= obj['answers']
+        comment=obj['allowText']
+        questions.append(Question(question, answers,comment))
+    new_survey= Survey(title=title,questions=questions,instructions=instructions)
+    surveys[title]=new_survey
+
+    
+    
+    return '/survey/complete'
+
+@app.route('/survey/complete')
+def complete_survey():
+    return redirect('/')
 

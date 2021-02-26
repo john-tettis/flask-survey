@@ -1,3 +1,4 @@
+import json 
 class Question:
     """Question on a questionnaire."""
 
@@ -21,6 +22,8 @@ class Survey:
         self.title = title
         self.instructions = instructions
         self.questions = questions
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
 
 
 satisfaction_survey = Survey(
