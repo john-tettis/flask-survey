@@ -4,5 +4,23 @@
 
 
 {% block content%}
-<h1 class='text-center'>Thank you for participating!</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class='display-2 text-center'>Thank you for participating!</h1>
+        </div>
+        <div class="card-body">
+            <h3>Your survey Results:</h3>
+            <ul>
+                {% for question,answer,comment in questions %}
+                
+                <li>{{question.question}}<br/>{{answer}}{% if comment %}<br/> -- {{comment}}{% endif %}</li>
+                {% endfor %}
+            </ul>
+            <a href="/"class="btn btn-primary">Return home</a>
+        </div>
+        
+    </div>
+    
+</div>
 {% endblock %}

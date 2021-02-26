@@ -1,18 +1,24 @@
 {% extends 'base.html'%}
 
-{% block title %}{{title}}{% endblock %}
+{% block title %}Survey Gorilla{% endblock %}
 
 
 {% block content%}
-<div class="card">
-    <div class="card-header">
-        {{title}}
-    </div>
-    <div class="card-body">
-        <p>{{instructions}}</p>
-        <a class='btn btn-primary' href="/survey/question/0">Start Survey</a>
+{% for code,survey in surveys.items() %}
+<div class="container">
+    <div class="card border">
+        <div class="card-header">
+            {{survey.title}}
+        </div>
+        <div class="card-body">
+            <p>{{survey.instructions}}</p>
+            <form action ="/initialize" method="POST">
+                <button class='btn btn-primary'>Start Survey</button>
+                <input type="text" style="display: none" name='survey_code' value="{{code}}">
+            </form>
+            
+        </div>
     </div>
 </div>
-
-
+{% endfor %}
 {% endblock %}
